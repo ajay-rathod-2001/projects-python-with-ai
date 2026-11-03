@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Node & Frontend
+node_modules/
+frontend/dist/
+frontend/dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Tauri Desktop Build Artifacts
+frontend/src-tauri/target/
+*.msi
+*.exe
+
+# Storage - Keep directories via .gitkeep but ignore user documents
+storage/resumes/*
+!storage/resumes/.gitkeep
+storage/job_descriptions/*
+!storage/job_descriptions/.gitkeep
+storage/reports/*
+!storage/reports/.gitkeep
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+storage/*.db
+storage/*.sqlite
+storage/*.sqlite3
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+backend/.env
+
+# OS / Editor specific
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/

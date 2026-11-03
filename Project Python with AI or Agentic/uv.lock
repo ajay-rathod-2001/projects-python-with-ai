@@ -1,0 +1,19 @@
+version = 1
+revision = 3
+requires-python = ">=3.14"
+
+[manifest]
+members = [
+    "hireai",
+    "project-python-with-ai-or-agentic",
+]
+
+[[package]]
+name = "hireai"
+version = "0.1.0"
+source = { virtual = "HireAI" }
+
+[[package]]
+name = "project-python-with-ai-or-agentic"
+version = "0.1.0"
+source = { virtual = "." }

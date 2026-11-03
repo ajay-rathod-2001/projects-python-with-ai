@@ -1,0 +1,253 @@
+{
+    "status": "success",
+    "meta": {
+        "filename": "transactions.txt",
+        "total_lines": 25,
+        "valid_count": 24,
+        "skipped_count": 1,
+        "processed_at": "2026-11-03T10:25:19.040115"
+    },
+    "summary": {
+        "total_spent": 15346.0,
+        "budget_limit": 10000.0,
+        "yearly_budget_limit": 120000.0,
+        "is_over_budget": true,
+        "over_budget_amount": 5346.0,
+        "utilization_percentage": 153.46,
+        "is_over_yearly_budget": false,
+        "yearly_over_budget_amount": 0.0,
+        "yearly_utilization_percentage": 12.79,
+        "category_totals": {
+            "Shopping": 5498.0,
+            "Bills": 3608.0,
+            "Food": 2480.0,
+            "Travel": 2320.0,
+            "Health": 1440.0
+        },
+        "top_category": "Shopping",
+        "top_category_amount": 5498.0,
+        "monthly_breakdown": {
+            "2026-08": 15346.0
+        },
+        "yearly_breakdown": {
+            "2026": 15346.0
+        },
+        "forecast": {
+            "daily_average": 639.42,
+            "projected_3_months": 57547.8,
+            "projected_6_months": 115095.6,
+            "projected_1_year": 233388.3,
+            "projected_2_years": 466776.6,
+            "projected_5_years": 1166941.5
+        },
+        "highest_expense": {
+            "id": "txn_13_20260813",
+            "date": "2026-08-13",
+            "merchant": "Electricity Bill Bescom",
+            "amount": 1850.0,
+            "category": "Bills",
+            "status": "Verified"
+        }
+    },
+    "transactions": [
+        {
+            "id": "txn_1_20260801",
+            "date": "2026-08-01",
+            "merchant": "Swiggy",
+            "amount": 350.0,
+            "category": "Food",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_2_20260802",
+            "date": "2026-08-02",
+            "merchant": "Uber Ride",
+            "amount": 180.0,
+            "category": "Travel",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_3_20260803",
+            "date": "2026-08-03",
+            "merchant": "DMart Supermarket",
+            "amount": 1450.0,
+            "category": "Shopping",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_4_20260804",
+            "date": "2026-08-04",
+            "merchant": "Zomato Food",
+            "amount": 220.0,
+            "category": "Food",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_5_20260805",
+            "date": "2026-08-05",
+            "merchant": "Petrol Pump HPCL",
+            "amount": 600.0,
+            "category": "Travel",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_6_20260806",
+            "date": "2026-08-06",
+            "merchant": "Amazon Purchase",
+            "amount": 999.0,
+            "category": "Shopping",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_7_20260807",
+            "date": "2026-08-07",
+            "merchant": "Canteen Snacks",
+            "amount": 60.0,
+            "category": "Food",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_8_20260808",
+            "date": "2026-08-08",
+            "merchant": "Mobile Recharge Jio",
+            "amount": 299.0,
+            "category": "Bills",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_10_20260810",
+            "date": "2026-08-10",
+            "merchant": "Tea Stall",
+            "amount": 40.0,
+            "category": "Food",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_11_20260811",
+            "date": "2026-08-11",
+            "merchant": "Flipkart Order",
+            "amount": 1299.0,
+            "category": "Shopping",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_12_20260812",
+            "date": "2026-08-12",
+            "merchant": "Ola Mini Ride",
+            "amount": 215.0,
+            "category": "Travel",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_13_20260813",
+            "date": "2026-08-13",
+            "merchant": "Electricity Bill Bescom",
+            "amount": 1850.0,
+            "category": "Bills",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_14_20260814",
+            "date": "2026-08-14",
+            "merchant": "Restaurant Dinner",
+            "amount": 850.0,
+            "category": "Food",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_15_20260815",
+            "date": "2026-08-15",
+            "merchant": "Broadband Wifi Bill Airtel",
+            "amount": 799.0,
+            "category": "Bills",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_16_20260816",
+            "date": "2026-08-16",
+            "merchant": "Metro Card Recharge",
+            "amount": 500.0,
+            "category": "Travel",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_17_20260817",
+            "date": "2026-08-17",
+            "merchant": "Myntra Fashion Shopping",
+            "amount": 1750.0,
+            "category": "Shopping",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_18_20260818",
+            "date": "2026-08-18",
+            "merchant": "Rapido Bike Taxi",
+            "amount": 75.0,
+            "category": "Travel",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_19_20260819",
+            "date": "2026-08-19",
+            "merchant": "Swiggy Instamart",
+            "amount": 420.0,
+            "category": "Food",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_20_20260820",
+            "date": "2026-08-20",
+            "merchant": "Cinema Movie Ticket",
+            "amount": 350.0,
+            "category": "Bills",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_21_20260821",
+            "date": "2026-08-21",
+            "merchant": "Petrol Pump BPCL",
+            "amount": 750.0,
+            "category": "Travel",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_22_20260822",
+            "date": "2026-08-22",
+            "merchant": "Pharmacy Medical Store",
+            "amount": 240.0,
+            "category": "Health",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_23_20260823",
+            "date": "2026-08-23",
+            "merchant": "Zomato Delivery",
+            "amount": 540.0,
+            "category": "Food",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_24_20260824",
+            "date": "2026-08-24",
+            "merchant": "Water Bill Payment",
+            "amount": 310.0,
+            "category": "Bills",
+            "status": "Verified"
+        },
+        {
+            "id": "txn_25_20260825",
+            "date": "2026-08-25",
+            "merchant": "Gym Membership",
+            "amount": 1200.0,
+            "category": "Health",
+            "status": "Verified"
+        }
+    ],
+    "skipped_lines": [
+        {
+            "line_number": 9,
+            "raw_content": "2026-08-09, Invalid Line Without Comma",
+            "reason": "Expected 3 comma-separated fields (date, merchant, amount), got 2"
+        }
+    ]
+}

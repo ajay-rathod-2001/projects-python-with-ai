@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HireAI — Intelligent Recruitment & Technical Assessment Platform</title>
+  <link rel="icon" type="image/jpeg" href="/static/robotics_resume_robo.jpg" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js for Interactive SaaS Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+            },
+            slate: {
+              850: '#151f33',
+              900: '#0f172a',
+              950: '#020617',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --theme-primary: #0ea5e9;
+      --theme-primary-hover: #38bdf8;
+      --theme-secondary: #6366f1;
+      --theme-glow: rgba(14, 165, 233, 0.45);
+      --theme-glow-strong: rgba(14, 165, 233, 0.75);
+      --btn-grad-start: #0284c7;
+      --btn-grad-end: #2563eb;
+      --orb-1: #0ea5e9;
+      --orb-2: #6366f1;
+      --orb-3: #10b981;
+    }
+
+    [data-theme="neon"] {
+      --theme-primary: #d946ef;
+      --theme-primary-hover: #f472b6;
+      --theme-secondary: #8b5cf6;
+      --theme-glow: rgba(217, 70, 239, 0.5);
+      --theme-glow-strong: rgba(217, 70, 239, 0.85);
+      --btn-grad-start: #c026d3;
+      --btn-grad-end: #7c3aed;
+      --orb-1: #d946ef;
+      --orb-2: #8b5cf6;
+      --orb-3: #ec4899;
+    }
+
+    [data-theme="matrix"] {
+      --theme-primary: #10b981;
+      --theme-primary-hover: #34d399;
+      --theme-secondary: #06b6d4;
+      --theme-glow: rgba(16, 185, 129, 0.5);
+      --theme-glow-strong: rgba(16, 185, 129, 0.85);
+      --btn-grad-start: #059669;
+      --btn-grad-end: #0d9488;
+      --orb-1: #10b981;
+      --orb-2: #059669;
+      --orb-3: #06b6d4;
+    }
+
+    [data-theme="solar"] {
+      --theme-primary: #f97316;
+      --theme-primary-hover: #fb923c;
+      --theme-secondary: #ef4444;
+      --theme-glow: rgba(249, 115, 22, 0.55);
+      --theme-glow-strong: rgba(249, 115, 22, 0.9);
+      --btn-grad-start: #ea580c;
+      --btn-grad-end: #dc2626;
+      --orb-1: #f97316;
+      --orb-2: #ef4444;
+      --orb-3: #eab308;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px var(--theme-glow); }
+      50% { box-shadow: 0 0 35px var(--theme-glow-strong); }
+    }
+    .glow-logo {
+      animation: pulseGlow 3.5s infinite ease-in-out;
+    }
+
+    /* Ambient floating energy orbs */
+    .energy-orb {
+      position: fixed;
+      width: 550px;
+      height: 550px;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.18;
+      transition: background 1.2s ease, opacity 0.8s ease;
+      animation: orbFloat 16s infinite alternate ease-in-out;
+    }
+    .orb-1 {
+      top: -150px;
+      right: -100px;
+      background: radial-gradient(circle, var(--orb-1), var(--orb-2));
+    }
+    .orb-2 {
+      bottom: -150px;
+      left: -100px;
+      background: radial-gradient(circle, var(--orb-3), var(--orb-1));
+      animation-delay: -8s;
+    }
+    .orb-3 {
+      top: 45%;
+      left: 30%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--orb-2), transparent);
+      opacity: 0.12;
+      animation-delay: -4s;
+    }
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(70px, 50px) scale(1.15) rotate(180deg); }
+      100% { transform: translate(-50px, 90px) scale(0.9) rotate(360deg); }
+    }
+
+    /* Shifting animated gradient text */
+    .text-gradient-flow {
+      background: linear-gradient(135deg, var(--theme-primary) 0%, #a855f7 35%, #34d399 70%, var(--theme-primary) 100%);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Energetic Primary Action Button Styles */
+    .btn-energetic {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--btn-grad-start) 0%, var(--btn-grad-end) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 18px -2px var(--theme-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-energetic::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+      transform: skewX(-20deg);
+      transition: 0.65s;
+      pointer-events: none;
+    }
+    .btn-energetic:hover::before {
+      left: 190%;
+    }
+    .btn-energetic:hover {
+      transform: translateY(-2.5px) scale(1.025);
+      box-shadow: 0 8px 32px var(--theme-glow-strong), 0 0 18px rgba(255, 255, 255, 0.25);
+    }
+    .btn-energetic:active {
+      transform: translateY(0.5px) scale(0.98);
+    }
+
+    /* Secondary Energetic Button */
+    .btn-energetic-secondary {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      cursor: pointer;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #f1f5f9;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-energetic-secondary:hover {
+      transform: translateY(-2px) scale(1.02);
+      border-color: var(--theme-primary);
+      color: #ffffff;
+      box-shadow: 0 6px 22px var(--theme-glow);
+    }
+    .btn-energetic-secondary:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    /* Moving Arrow Animation inside energetic buttons */
+    .arrow-icon, .arrow-move {
+      display: inline-flex;
+      align-items: center;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-energetic:hover .arrow-icon,
+    .btn-energetic:hover .arrow-move,
+    .btn-energetic-secondary:hover .arrow-icon,
+    .btn-energetic-secondary:hover .arrow-move {
+      transform: translateX(6px);
+      animation: energeticArrowFlight 0.85s infinite ease-in-out 0.2s;
+    }
+    @keyframes energeticArrowFlight {
+      0%, 100% { transform: translateX(4px); }
+      50% { transform: translateX(9px); }
+    }
+
+    /* Continuous subtle pulse for hero action */
+    .btn-pulse-glow {
+      animation: heroButtonPulse 3s infinite ease-in-out;
+    }
+    @keyframes heroButtonPulse {
+      0%, 100% {
+        box-shadow: 0 4px 18px var(--theme-glow), 0 0 0 0 var(--theme-glow);
+      }
+      50% {
+        box-shadow: 0 8px 32px var(--theme-glow-strong), 0 0 0 8px rgba(14, 165, 233, 0);
+      }
+    }
+
+    /* Pulsing energetic glowing ring */
+    .pulse-ring {
+      animation: ringGlow 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    @keyframes ringGlow {
+      0%, 100% { box-shadow: 0 0 0 0 var(--theme-glow), 0 0 15px var(--theme-glow); }
+      50% { box-shadow: 0 0 0 8px rgba(14, 165, 233, 0), 0 0 30px var(--theme-glow-strong); }
+    }
+
+    /* Card hover elevation */
+    .energetic-card {
+      transition: all 0.3s ease;
+      border: 1px solid rgba(51, 65, 85, 0.6);
+    }
+    .energetic-card:hover {
+      border-color: var(--theme-primary);
+      box-shadow: 0 8px 25px var(--theme-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #090d16; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    /* Monaco-like code editor styles */
+    .code-editor {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      tab-size: 4;
+      line-height: 1.5;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-sky-500 selection:text-white relative overflow-x-hidden">
+
+  <!-- Ambient Glowing Energy Orbs for Impressive Animated Theme -->
+  <div class="energy-orb orb-1"></div>
+  <div class="energy-orb orb-2"></div>
+  <div class="energy-orb orb-3"></div>
+
+  <!-- Top Navigation Header -->
+  <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
+    <div class="px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3.5">
+        <img
+          src="/static/robotics_resume_robo.jpg"
+          alt="HireAI Logo"
+          class="w-10 h-10 rounded-xl object-cover border-2 border-sky-500/70 shadow-lg glow-logo"
+        />
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-lg font-bold tracking-tight text-white flex items-center space-x-1.5">
+              <span>Hire</span><span class="text-sky-400">AI</span>
+            </h1>
+            <span class="text-[10px] bg-sky-500/20 text-sky-400 font-semibold px-2 py-0.5 rounded-full border border-sky-500/30">
+              Enterprise v2.0
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 hidden sm:block">Intelligent Recruitment &amp; Technical Assessment Infrastructure</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- Live Animated Theme Switcher -->
+        <div class="flex items-center space-x-1 p-1 rounded-xl bg-slate-900/90 border border-slate-800 text-xs shadow-inner">
+          <span class="text-[10px] uppercase font-bold text-slate-400 px-2 flex items-center space-x-1">
+            <i data-lucide="palette" class="w-3 h-3 text-sky-400"></i>
+            <span class="hidden lg:inline">Theme</span>
+          </span>
+          <button onclick="setAppTheme('cyber')" id="theme-btn-cyber" title="Electric Cyber Cyan Theme" class="theme-btn px-2 py-1 rounded-lg text-[11px] font-bold text-sky-400 bg-sky-500/20 border border-sky-500/30 transition flex items-center space-x-1">
+            <span class="w-2 h-2 rounded-full bg-sky-400 shadow-sm shadow-sky-400"></span>
+            <span class="hidden sm:inline">Cyber</span>
+          </button>
+          <button onclick="setAppTheme('neon')" id="theme-btn-neon" title="Cyberpunk Neon Fuchsia Theme" class="theme-btn px-2 py-1 rounded-lg text-[11px] font-bold text-slate-400 hover:text-fuchsia-400 transition flex items-center space-x-1">
+            <span class="w-2 h-2 rounded-full bg-fuchsia-400"></span>
+            <span class="hidden sm:inline">Neon</span>
+          </button>
+          <button onclick="setAppTheme('matrix')" id="theme-btn-matrix" title="Matrix Emerald Theme" class="theme-btn px-2 py-1 rounded-lg text-[11px] font-bold text-slate-400 hover:text-emerald-400 transition flex items-center space-x-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span class="hidden sm:inline">Matrix</span>
+          </button>
+          <button onclick="setAppTheme('solar')" id="theme-btn-solar" title="Solar Sunset Flame Theme" class="theme-btn px-2 py-1 rounded-lg text-[11px] font-bold text-slate-400 hover:text-amber-400 transition flex items-center space-x-1">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            <span class="hidden sm:inline">Solar</span>
+          </button>
+        </div>
+
+        <!-- Live Server Status Badge -->
+        <div id="health-badge" class="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/80 text-xs font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" id="status-dot"></span>
+          <span id="status-text" class="text-slate-300">API Live</span>
+        </div>
+
+        <button
+          onclick="loadDemoScenario()"
+          class="btn-energetic text-xs font-bold px-3.5 py-1.5 rounded-xl text-white transition flex items-center shadow-lg"
+        >
+          <i data-lucide="zap" class="w-3.5 h-3.5 mr-1.5 text-amber-300"></i>
+          <span>Load Demo Data</span>
+          <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+        </button>
+
+        <a
+          href="/docs"
+          target="_blank"
+          class="text-xs font-medium px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center space-x-1 border border-slate-700"
+        >
+          <span>Swagger Docs</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Body Layout (Sidebar + Main View) -->
+  <div class="flex-1 flex overflow-hidden">
+    <!-- Left Sidebar (Linear/Vercel Style) -->
+    <aside class="w-64 border-r border-slate-800/80 bg-slate-900/60 p-4 flex flex-col justify-between shrink-0 hidden md:flex">
+      <div class="space-y-6">
+        <div>
+          <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Core Modules</div>
+          <nav class="space-y-1">
+            <button onclick="switchTab('overview')" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white transition active-nav bg-sky-500/15 text-sky-400 border border-sky-500/20" data-tab="overview">
+              <i data-lucide="layout-dashboard" class="w-4 h-4 text-sky-400"></i>
+              <span>Overview</span>
+            </button>
+            <button onclick="switchTab('resume')" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white transition" data-tab="resume">
+              <i data-lucide="file-text" class="w-4 h-4 text-slate-400"></i>
+              <span>Resume Analyzer</span>
+            </button>
+            <button onclick="switchTab('job')" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white transition" data-tab="job">
+              <i data-lucide="briefcase" class="w-4 h-4 text-slate-400"></i>
+              <span>JD Analyzer</span>
+            </button>
+            <button onclick="switchTab('matching')" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white transition" data-tab="matching">
+              <i data-lucide="git-compare" class="w-4 h-4 text-slate-400"></i>
+              <span>Candidate Matching</span>
+            </button>
+            <button onclick="switchTab('gap')" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white transition" data-tab="gap">
+              <i data-lucide="trending-up" class="w-4 h-4 text-slate-400"></i>
+              <span>Skill Gap &amp; Roadmap</span>
+            </button>
+          </nav>
+        </div>
+
+        <div>
+          <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Technical Evaluation</div>
+          <nav class="space-y-1">
+            <button onclick="switchTab('assessment')" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white transition" data-tab="assessment">
+              <i data-lucide="code-2" class="w-4 h-4 text-teal-400"></i>
+              <span>Technical Assessment</span>
+            </button>
+            <button onclick="switchTab('copilot')" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white transition" data-tab="copilot">
+              <i data-lucide="bot" class="w-4 h-4 text-indigo-400"></i>
+              <span>AI Interviewer Copilot</span>
+            </button>
+          </nav>
+        </div>
+
+        <div>
+          <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">System</div>
+          <nav class="space-y-1">
+            <button onclick="switchTab('reports')" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white transition" data-tab="reports">
+              <i data-lucide="bar-chart-3" class="w-4 h-4 text-slate-400"></i>
+              <span>Reports</span>
+            </button>
+            <button onclick="switchTab('settings')" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white transition" data-tab="settings">
+              <i data-lucide="settings" class="w-4 h-4 text-slate-400"></i>
+              <span>Settings</span>
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <!-- User / Recruiter Pill -->
+      <div class="p-3 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center font-bold text-xs text-white">
+          HR
+        </div>
+        <div class="overflow-hidden">
+          <div class="text-xs font-semibold text-white truncate">Lead Recruiter</div>
+          <div class="text-[10px] text-slate-400">recruiter@hireai.io</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Viewport -->
+    <main class="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 bg-slate-950">
+
+      <!-- ================= 1. OVERVIEW TAB ================= -->
+      <section id="tab-overview" class="tab-content active space-y-8">
+        <!-- Hero Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-2">
+            <div class="flex justify-between items-center text-slate-400 text-xs">
+              <span>Total Candidates</span>
+              <i data-lucide="users" class="w-4 h-4 text-sky-400"></i>
+            </div>
+            <div class="text-3xl font-black text-white" id="stat-total-candidates">142</div>
+            <div class="text-[11px] text-emerald-400 flex items-center space-x-1">
+              <span>↑ +18% this week</span>
+            </div>
+          </div>
+          <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-2">
+            <div class="flex justify-between items-center text-slate-400 text-xs">
+              <span>Resumes Analyzed</span>
+              <i data-lucide="file-check" class="w-4 h-4 text-teal-400"></i>
+            </div>
+            <div class="text-3xl font-black text-white" id="stat-resumes-count">98</div>
+            <div class="text-[11px] text-sky-400">PyMuPDF + NLP Extractor</div>
+          </div>
+          <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-2">
+            <div class="flex justify-between items-center text-slate-400 text-xs">
+              <span>Assessments Executed</span>
+              <i data-lucide="cpu" class="w-4 h-4 text-indigo-400"></i>
+            </div>
+            <div class="text-3xl font-black text-white" id="stat-assessments-count">314</div>
+            <div class="text-[11px] text-indigo-400">Isolated Subprocess Worker</div>
+          </div>
+          <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-2">
+            <div class="flex justify-between items-center text-slate-400 text-xs">
+              <span>Avg Compatibility</span>
+              <i data-lucide="target" class="w-4 h-4 text-emerald-400"></i>
+            </div>
+            <div class="text-3xl font-black text-emerald-400" id="stat-avg-match">83%</div>
+            <div class="text-[11px] text-slate-400">Transparent 100-pt engine</div>
+          </div>
+        </div>
+
+        <!-- Quick Launch Shortcuts -->
+        <div class="p-6 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-sky-950/30 border border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-2">
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-400 border border-sky-500/30">
+              ⚡ Instant Screening Pipeline
+            </span>
+            <h2 class="text-2xl font-black text-white text-gradient-flow">HireAI Technical Assessment &amp; Screening Engine</h2>
+            <p class="text-xs text-slate-300 max-w-xl">
+              Upload resumes, analyze technical requirements from Job Descriptions, evaluate live coding submissions in isolated workers, and empower recruiters with an AI Interviewer Copilot.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <button onclick="switchTab('resume')" class="btn-energetic px-4 py-2.5 rounded-xl font-bold text-xs text-white shadow-lg transition flex items-center">
+              <span>Upload Resume</span>
+              <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+            </button>
+            <button onclick="switchTab('assessment')" class="btn-energetic-secondary px-4 py-2.5 rounded-xl font-bold text-xs text-white transition flex items-center">
+              <span>Open Code Editor</span>
+              <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Activities & Skills Matrix -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-bold text-white uppercase tracking-wider">Top Recruited Skills</h3>
+              <span class="text-xs text-slate-400">Frequency Analysis</span>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-medium text-slate-300">Python (FastAPI, PyTorch, Concurrency)</span>
+                  <span class="font-bold text-sky-400">95%</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div class="bg-sky-500 h-full rounded-full" style="width: 95%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-medium text-slate-300">SQL &amp; Database Design (PostgreSQL, Indexing)</span>
+                  <span class="font-bold text-teal-400">90%</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div class="bg-teal-500 h-full rounded-full" style="width: 90%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-medium text-slate-300">Machine Learning &amp; Transformers</span>
+                  <span class="font-bold text-indigo-400">85%</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div class="bg-indigo-500 h-full rounded-full" style="width: 85%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-medium text-slate-300">Generative AI &amp; Vector Databases</span>
+                  <span class="font-bold text-emerald-400">80%</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div class="bg-emerald-500 h-full rounded-full" style="width: 80%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-bold text-white uppercase tracking-wider">Recent Candidate Pipeline</h3>
+              <span class="text-xs text-slate-400">Real-Time Status</span>
+            </div>
+            <div class="space-y-3">
+              <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs">
+                <div>
+                  <div class="font-bold text-white">Alex Morgan</div>
+                  <div class="text-[11px] text-slate-400">Senior Full-Stack &amp; Systems Engineer</div>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">92% Match</span>
+                  <div class="text-[10px] text-slate-500 mt-1">Screening Cleared</div>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs">
+                <div>
+                  <div class="font-bold text-white">Jordan Rivera</div>
+                  <div class="text-[11px] text-slate-400">Backend &amp; Distributed Systems</div>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-400 font-bold border border-sky-500/30">84% Match</span>
+                  <div class="text-[10px] text-slate-500 mt-1">Assessment In Progress</div>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs">
+                <div>
+                  <div class="font-bold text-white">Taylor Swift</div>
+                  <div class="text-[11px] text-slate-400">AI / ML Infrastructure Architect</div>
+                </div>
+                <div class="text-right">
+                  <span class="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-400 font-bold border border-indigo-500/30">89% Match</span>
+                  <div class="text-[10px] text-slate-500 mt-1">Interview Scheduled</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 2. RESUME ANALYZER TAB ================= -->
+      <section id="tab-resume" class="tab-content space-y-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-xl font-bold text-white">AI Resume Analyzer</h2>
+            <p class="text-xs text-slate-400">Upload PDF, DOCX, or TXT candidate resumes for deep structured extraction</p>
+          </div>
+          <div class="flex space-x-2">
+            <button onclick="document.getElementById('resume-file-input').click()" class="btn-energetic px-4 py-2 rounded-xl text-white font-bold text-xs shadow-lg transition flex items-center">
+              <i data-lucide="upload" class="w-4 h-4 mr-1.5"></i>
+              <span>Upload Document</span>
+              <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+            </button>
+            <input type="file" id="resume-file-input" class="hidden" accept=".pdf,.docx,.doc,.txt,.rtf" onchange="uploadResumeFile(event)" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Raw Document Input / Drag & Drop -->
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider">Candidate Input</h3>
+            <div
+              onclick="document.getElementById('resume-file-input').click()"
+              class="border-2 border-dashed border-slate-700 hover:border-sky-500/60 rounded-2xl p-6 text-center cursor-pointer bg-slate-950/40 transition space-y-2"
+            >
+              <i data-lucide="file-up" class="w-8 h-8 text-sky-400 mx-auto"></i>
+              <div class="text-xs font-semibold text-white" id="upload-status-title">Click to upload resume</div>
+              <div class="text-[10px] text-slate-400" id="upload-status-sub">Supports PDF, DOCX, TXT (Max 20MB)</div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">Or Paste Resume Text:</label>
+              <textarea
+                id="resume-text-input"
+                rows="7"
+                class="w-full rounded-xl bg-slate-950 border border-slate-800 p-3 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-sky-500 font-mono resize-none"
+                placeholder="Paste candidate resume here..."
+              ></textarea>
+            </div>
+            <button onclick="parsePastedResume()" class="w-full py-2.5 rounded-xl btn-energetic text-white font-bold text-xs shadow-lg transition flex items-center justify-center">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 mr-1.5 text-sky-200"></i>
+              <span>Parse Text Resume</span>
+              <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+            </button>
+          </div>
+
+          <!-- Structured JSON Extractor View -->
+          <div class="lg:col-span-2 p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-bold text-white uppercase tracking-wider">Structured Extraction JSON</h3>
+              <span class="text-xs text-emerald-400 font-medium">Prompt 03 Conforming</span>
+            </div>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 font-mono text-[11px] text-emerald-400 overflow-x-auto max-h-96">
+              <pre id="resume-json-output">{
+  "candidate_name": "ALEX MORGAN",
+  "email": "alex.morgan@email.com",
+  "phone": "(555) 321-9876",
+  "location": "Seattle, WA",
+  "technical_skills": ["Python", "FastAPI", "Go", "TypeScript", "React", "Docker", "Kubernetes", "PostgreSQL", "Redis", "PyTorch"],
+  "soft_skills": ["Cross-Functional Collaboration", "Mentorship", "Problem Solving"],
+  "education": [{"degree": "B.S. in Computer Science", "institution": "University of Washington", "year": "2018"}],
+  "experience": [{"title": "Senior Engineer | CloudScale Systems", "years": 4.5}],
+  "projects": ["High-throughput asynchronous message broker", "Distributed vector search pipeline"],
+  "missing_information": []
+}</pre>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
+              <div class="p-3 rounded-xl bg-slate-950 border border-slate-800/80">
+                <span class="text-slate-400">Missing Information:</span>
+                <span id="resume-missing-info" class="font-bold text-emerald-400 block mt-0.5">None Detected (100% Complete)</span>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-950 border border-slate-800/80">
+                <span class="text-slate-400">Resume Optimization Tip:</span>
+                <span id="resume-opt-tip" class="font-medium text-sky-400 block mt-0.5">Quantified impact metrics provided in all 4 work experiences.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 3. JD ANALYZER TAB ================= -->
+      <section id="tab-job" class="tab-content space-y-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-xl font-bold text-white">Job Description Analyzer</h2>
+            <p class="text-xs text-slate-400">Extract mandatory and optional skills, experience, and educational requirements</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider">Job Posting Input</h3>
+            <textarea
+              id="job-description-input"
+              rows="10"
+              class="w-full rounded-xl bg-slate-950 border border-slate-800 p-3 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500 font-mono resize-none"
+              placeholder="Paste job description text here..."
+            >Senior Backend & AI Infrastructure Engineer
+Company: CloudScale AI
+Location: Seattle, WA / Remote
+
+Requirements:
+- 5+ years building backend microservices in Python (FastAPI) and Go.
+- Strong proficiency in SQL database design (PostgreSQL) and caching (Redis).
+- Experience containerizing workloads with Docker and Kubernetes on AWS/GCP.
+- Familiarity with Generative AI, embeddings, and vector databases.
+- Strong communication and cross-functional leadership skills.</textarea>
+            <button onclick="analyzeJobDescription()" class="w-full py-2.5 rounded-xl btn-energetic text-white font-bold text-xs shadow-lg transition flex items-center justify-center">
+              <i data-lucide="cpu" class="w-3.5 h-3.5 mr-1.5 text-teal-200"></i>
+              <span>Extract Job Requirements</span>
+              <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+            </button>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider">Extracted Requirements Classification</h3>
+            <div class="space-y-3" id="jd-extracted-list">
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center text-xs">
+                <div>
+                  <span class="font-bold text-white block">Python (FastAPI) &amp; Go</span>
+                  <span class="text-[11px] text-slate-400">5+ years microservices development</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30 text-[10px]">Mandatory</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center text-xs">
+                <div>
+                  <span class="font-bold text-white block">PostgreSQL &amp; Redis</span>
+                  <span class="text-[11px] text-slate-400">Database indexing &amp; distributed cache</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30 text-[10px]">Mandatory</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center text-xs">
+                <div>
+                  <span class="font-bold text-white block">Docker &amp; Kubernetes (AWS)</span>
+                  <span class="text-[11px] text-slate-400">Container orchestration</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 font-bold border border-amber-500/30 text-[10px]">Preferred</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center text-xs">
+                <div>
+                  <span class="font-bold text-white block">Generative AI &amp; Vector Databases</span>
+                  <span class="text-[11px] text-slate-400">LLM API integration and retrieval</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-400 font-bold border border-sky-500/30 text-[10px]">Preferred</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 4. CANDIDATE MATCHING TAB ================= -->
+      <section id="tab-matching" class="tab-content space-y-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-xl font-bold text-white">AI Resume vs JD Matching Engine</h2>
+            <p class="text-xs text-slate-400">Deterministic, transparent 100-point compatibility scoring with evidence citations</p>
+          </div>
+          <button onclick="runDirectMatch()" class="btn-energetic btn-pulse-glow px-5 py-2.5 rounded-xl text-xs font-black text-white shadow-xl transition flex items-center">
+            <span>🚀 Run Compatibility Analysis</span>
+            <span class="arrow-move font-black text-sm ml-2">➔</span>
+          </button>
+        </div>
+
+        <!-- Overall Score Card -->
+        <div class="p-6 md:p-8 rounded-3xl bg-slate-900 border border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-2">
+            <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              ✓ FAANG/Tier-1 Qualified
+            </span>
+            <h3 class="text-2xl font-black text-white" id="match-candidate-title">Alex Morgan for Senior Backend &amp; AI Infra</h3>
+            <p class="text-xs text-slate-300 max-w-xl">
+              Candidate satisfies 100% of mandatory requirements (Python, PostgreSQL, Microservices) and demonstrates 85%+ semantic alignment across preferred competencies.
+            </p>
+          </div>
+          <div class="flex items-center space-x-6 p-4 rounded-2xl bg-slate-950 border border-slate-800">
+            <div class="text-center">
+              <div class="text-5xl font-black text-gradient-flow" id="match-score-big">
+                83%
+              </div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mt-1">Overall Match</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Score Dashboard -->
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Category Score Breakdown</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-1">
+              <div class="text-xs text-slate-400">Python</div>
+              <div class="text-2xl font-black text-sky-400">95%</div>
+              <div class="text-[10px] text-emerald-400">Exact Match</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-1">
+              <div class="text-xs text-slate-400">Machine Learning</div>
+              <div class="text-2xl font-black text-indigo-400">85%</div>
+              <div class="text-[10px] text-emerald-400">PyTorch, MiniLM</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-1">
+              <div class="text-xs text-slate-400">SQL / Storage</div>
+              <div class="text-2xl font-black text-teal-400">90%</div>
+              <div class="text-[10px] text-emerald-400">PostgreSQL, Redis</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-1">
+              <div class="text-xs text-slate-400">Generative AI</div>
+              <div class="text-2xl font-black text-amber-400">65%</div>
+              <div class="text-[10px] text-amber-400">Partial Experience</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-1">
+              <div class="text-xs text-slate-400">Communication</div>
+              <div class="text-2xl font-black text-emerald-400">80%</div>
+              <div class="text-[10px] text-emerald-400">Leadership Proven</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 5. SKILL GAP TAB ================= -->
+      <section id="tab-gap" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white">Skill Gap Analysis &amp; Learning Roadmap</h2>
+          <p class="text-xs text-slate-400">Objective gap detection and tiered personalized technical progression roadmap</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+            <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center space-x-1.5">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>Demonstrated Skills</span>
+            </h3>
+            <ul class="space-y-2 text-xs text-slate-300">
+              <li class="p-2.5 rounded-lg bg-slate-950 border border-slate-800">✓ Python &amp; FastAPI asynchronous services</li>
+              <li class="p-2.5 rounded-lg bg-slate-950 border border-slate-800">✓ PostgreSQL database indexing &amp; migrations</li>
+              <li class="p-2.5 rounded-lg bg-slate-950 border border-slate-800">✓ Docker containerization &amp; Kubernetes deployments</li>
+              <li class="p-2.5 rounded-lg bg-slate-950 border border-slate-800">✓ Redis distributed caching &amp; pub/sub</li>
+            </ul>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+            <h3 class="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center space-x-1.5">
+              <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+              <span>Improvement Areas</span>
+            </h3>
+            <ul class="space-y-2 text-xs text-slate-300">
+              <li class="p-2.5 rounded-lg bg-slate-950 border border-slate-800">⚠ Vector DB indexing (HNSW, pgvector)</li>
+              <li class="p-2.5 rounded-lg bg-slate-950 border border-slate-800">⚠ Advanced RAG pipelines &amp; rerankers</li>
+              <li class="p-2.5 rounded-lg bg-slate-950 border border-slate-800">⚠ LangChain / LlamaIndex production orchestration</li>
+            </ul>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+            <h3 class="text-sm font-bold text-sky-400 uppercase tracking-wider flex items-center space-x-1.5">
+              <i data-lucide="compass" class="w-4 h-4"></i>
+              <span>Actionable Projects</span>
+            </h3>
+            <div class="space-y-2.5 text-xs">
+              <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <div class="font-bold text-white">Hybrid Vector RAG Microservice</div>
+                <div class="text-[11px] text-slate-400 mt-1">Combine BM25 + dense sentence embeddings with cross-encoder re-ranking.</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <div class="font-bold text-white">Distributed Rate Limiter</div>
+                <div class="text-[11px] text-slate-400 mt-1">Implement sliding-window rate limiter in Redis + FastAPI.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 6. TECHNICAL ASSESSMENT TAB ================= -->
+      <section id="tab-assessment" class="tab-content space-y-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-xl font-bold text-white">Technical Assessment Platform</h2>
+            <p class="text-xs text-slate-400">Live coding environment with isolated test runner, memory tracking, and submission history</p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <select id="challenge-selector" onchange="onChallengeSelected()" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200">
+              <option value="loading">Loading challenges...</option>
+            </select>
+            <select id="language-selector" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-sky-400 font-semibold">
+              <option value="python">Python 3.14</option>
+              <option value="javascript">JavaScript (Node.js)</option>
+              <option value="cpp">C++ (GCC)</option>
+              <option value="java">Java 21</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Problem Description & Test Cases -->
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4 flex flex-col justify-between">
+            <div class="space-y-4">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span id="challenge-difficulty" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">Easy</span>
+                  <span id="challenge-tags" class="text-[11px] text-slate-400">Arrays • Hash Table</span>
+                </div>
+                <h3 id="challenge-title" class="text-lg font-bold text-white mt-1">Two Sum Target Pair Finder</h3>
+              </div>
+              <div id="challenge-desc" class="text-xs text-slate-300 leading-relaxed font-mono bg-slate-950 p-4 rounded-xl border border-slate-800">
+                Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+              </div>
+            </div>
+
+            <!-- Execution Results Box -->
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-bold text-white">Execution Output &amp; Benchmarks</span>
+                <span id="exec-status-badge" class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px] font-bold">Ready</span>
+              </div>
+              <div id="exec-metrics" class="text-[11px] text-slate-400 flex space-x-4">
+                <span>Time: <strong class="text-white" id="exec-time">0 ms</strong></span>
+                <span>Peak Memory: <strong class="text-white" id="exec-memory">0 KB</strong></span>
+                <span>Passed: <strong class="text-emerald-400" id="exec-passed">0/0</strong></span>
+              </div>
+              <div id="exec-details" class="text-[11px] font-mono text-slate-300 max-h-32 overflow-y-auto space-y-1">
+                No tests executed yet. Click "Run Code" below.
+              </div>
+            </div>
+          </div>
+
+          <!-- Monaco-style Code Editor -->
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-400 flex items-center space-x-1.5">
+                  <i data-lucide="terminal" class="w-3.5 h-3.5 text-sky-400"></i>
+                  <span>Code Workspace (solution.py)</span>
+                </span>
+                <span class="text-[10px] text-slate-500">Auto-sandboxed worker</span>
+              </div>
+              <textarea
+                id="code-editor"
+                rows="16"
+                class="w-full rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-slate-100 placeholder-slate-600 focus:outline-none focus:border-sky-500 code-editor resize-none"
+              >def solution(nums, target):
+    seen = {}
+    for i, n in enumerate(nums):
+        diff = target - n
+        if diff in seen:
+            return [seen[diff], i]
+        seen[n] = i
+    return []</textarea>
+            </div>
+
+            <div class="flex space-x-3">
+              <button
+                onclick="runCode()"
+                id="btn-run-code"
+                class="flex-1 py-2.5 rounded-xl btn-energetic-secondary text-white font-bold text-xs transition flex items-center justify-center"
+              >
+                <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-400 mr-1.5"></i>
+                <span>Run Code (Public Tests)</span>
+                <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+              </button>
+              <button
+                onclick="submitCode()"
+                id="btn-submit-code"
+                class="flex-1 py-2.5 rounded-xl btn-energetic btn-pulse-glow text-white font-bold text-xs shadow-lg transition flex items-center justify-center"
+              >
+                <i data-lucide="check" class="w-3.5 h-3.5 text-white mr-1.5"></i>
+                <span>Submit Final Assessment</span>
+                <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 7. AI INTERVIEWER COPILOT TAB ================= -->
+      <section id="tab-copilot" class="tab-content space-y-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-xl font-bold text-white">AI Interviewer Copilot</h2>
+            <p class="text-xs text-slate-400">Dynamic question generation, coding error explanation, and candidate evidence mapping</p>
+          </div>
+          <div class="flex space-x-2">
+            <select id="copilot-category" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200">
+              <option value="all">All Topics</option>
+              <option value="python">Python</option>
+              <option value="sql">SQL &amp; Storage</option>
+              <option value="machine_learning">Machine Learning</option>
+              <option value="generative_ai">Generative AI</option>
+            </select>
+            <select id="copilot-difficulty" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-sky-400">
+              <option value="basic">Basic Level</option>
+              <option value="intermediate" selected>Intermediate Level</option>
+              <option value="advanced">Advanced Level</option>
+            </select>
+            <button onclick="generateInterviewQuestions()" class="btn-energetic px-4 py-1.5 rounded-xl font-bold text-xs text-white shadow-lg transition flex items-center">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 mr-1.5 text-amber-300"></i>
+              <span>Generate Questions</span>
+              <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Generated Questions Container -->
+        <div class="space-y-4" id="copilot-questions-container">
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Python • Intermediate</span>
+              <span class="text-[10px] text-slate-500 font-mono">ID: Q-PY-01</span>
+            </div>
+            <h4 class="text-sm font-bold text-white">What is the Global Interpreter Lock (GIL) in CPython, and how does it impact CPU-bound versus I/O-bound concurrency?</h4>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800/80 text-xs text-slate-300">
+              <strong class="text-slate-400 block mb-1">Ideal Answer Guide:</strong>
+              The GIL is a mutex in CPython that prevents multiple native threads from executing bytecodes simultaneously. It limits CPU-bound speedup across multiple cores, but releases during I/O operations (networking, disk), making asyncio or threading effective for I/O tasks.
+            </div>
+            <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/60 text-xs">
+              <strong class="text-indigo-400 block mb-1">Suggested Follow-Up Prompts for Interviewer:</strong>
+              <ul class="list-disc list-inside space-y-1 text-slate-400">
+                <li>What architectural changes are introduced in Python 3.13 free-threaded builds (PEP 703)?</li>
+                <li>How does asyncio achieve concurrency without OS threads?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Error Explainer Utility -->
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-amber-400"></i>
+            <span>Interviewer Coding Error Explainer</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <textarea
+              id="error-explainer-input"
+              rows="3"
+              class="w-full rounded-xl bg-slate-950 border border-slate-800 p-3 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500 font-mono resize-none"
+              placeholder="Paste candidate error trace or exception here..."
+            >IndexError: list index out of range at line 14</textarea>
+            <div id="error-explainer-output" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs space-y-1.5">
+              <div class="font-bold text-amber-400">Pedagogical Interview Hint:</div>
+              <p class="text-slate-300">Ask the candidate what the index is when the loop reaches its final iteration. Guide them to check boundary conditions without revealing the code solution directly.</p>
+            </div>
+          </div>
+          <button onclick="explainErrorLive()" class="px-4 py-2 rounded-xl btn-energetic-secondary text-white font-bold text-xs transition flex items-center">
+            <span>Generate Guidance Hint</span>
+            <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= 8. REPORTS TAB ================= -->
+      <section id="tab-reports" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white">Candidate Evaluation Reports</h2>
+          <p class="text-xs text-slate-400">Exportable executive hiring scorecards and candidate portfolios</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Candidate Scorecard: Alex Morgan</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+              <div class="text-slate-400">Overall Match</div>
+              <div class="text-2xl font-black text-emerald-400">83 / 100</div>
+              <div class="text-[10px] text-slate-500">Strong Recommendation</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+              <div class="text-slate-400">Coding Assessment</div>
+              <div class="text-2xl font-black text-sky-400">100%</div>
+              <div class="text-[10px] text-slate-500">5/5 Test Cases Passed</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+              <div class="text-slate-400">Interview Rating</div>
+              <div class="text-2xl font-black text-indigo-400">4.8 / 5.0</div>
+              <div class="text-[10px] text-slate-500">Strong Hire</div>
+            </div>
+          </div>
+          <button onclick="window.print()" class="px-4 py-2 rounded-xl btn-energetic-secondary text-white font-bold text-xs transition flex items-center">
+            <i data-lucide="printer" class="w-4 h-4 mr-1.5"></i>
+            <span>Print / Save as PDF</span>
+            <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= 9. SETTINGS TAB ================= -->
+      <section id="tab-settings" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white">Platform Settings &amp; Configuration</h2>
+          <p class="text-xs text-slate-400">Manage LLM keys, scoring algorithms, and isolated execution limits</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-4 max-w-2xl text-xs">
+          <div class="space-y-1">
+            <label class="font-medium text-slate-300">OpenAI / Gemini API Key (Optional)</label>
+            <input type="password" placeholder="sk-..." class="w-full rounded-xl bg-slate-950 border border-slate-800 p-2.5 text-xs text-slate-200" />
+            <span class="text-[10px] text-slate-500">HireAI features 100% local deterministic fallback engines when keys are not configured.</span>
+          </div>
+          <div class="space-y-1">
+            <label class="font-medium text-slate-300">Code Execution Timeout (Seconds)</label>
+            <input type="number" value="5" class="w-32 rounded-xl bg-slate-950 border border-slate-800 p-2 text-xs text-slate-200" />
+          </div>
+          <div class="space-y-1">
+            <label class="font-medium text-slate-300">Memory Limit per Process (MB)</label>
+            <input type="number" value="128" class="w-32 rounded-xl bg-slate-950 border border-slate-800 p-2 text-xs text-slate-200" />
+          </div>
+          <button class="px-4 py-2 rounded-xl btn-energetic text-white font-bold text-xs transition flex items-center">
+            <span>Save Preferences</span>
+            <span class="arrow-move font-black text-xs ml-1.5">➔</span>
+          </button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Live Dynamic Theme Switcher with Persistent Storage
+    function setAppTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem('hireai_theme', theme);
+      } catch (e) {}
+
+      const themes = ['cyber', 'neon', 'matrix', 'solar'];
+      themes.forEach(t => {
+        const btn = document.getElementById(`theme-btn-${t}`);
+        if (!btn) return;
+        btn.classList.remove(
+          'bg-sky-500/20', 'border-sky-500/30', 'text-sky-400',
+          'bg-fuchsia-500/20', 'border-fuchsia-500/30', 'text-fuchsia-400',
+          'bg-emerald-500/20', 'border-emerald-500/30', 'text-emerald-400',
+          'bg-amber-500/20', 'border-amber-500/30', 'text-amber-400',
+          'border'
+        );
+        btn.classList.add('text-slate-400');
+      });
+
+      const activeBtn = document.getElementById(`theme-btn-${theme}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-400');
+        if (theme === 'cyber') activeBtn.classList.add('bg-sky-500/20', 'text-sky-400', 'border', 'border-sky-500/30');
+        if (theme === 'neon') activeBtn.classList.add('bg-fuchsia-500/20', 'text-fuchsia-400', 'border', 'border-fuchsia-500/30');
+        if (theme === 'matrix') activeBtn.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border', 'border-emerald-500/30');
+        if (theme === 'solar') activeBtn.classList.add('bg-amber-500/20', 'text-amber-400', 'border', 'border-amber-500/30');
+      }
+    }
+
+    try {
+      const savedTheme = localStorage.getItem('hireai_theme') || 'cyber';
+      setAppTheme(savedTheme);
+    } catch (e) {
+      setAppTheme('cyber');
+    }
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    const API_BASE = "/api/v1";
+    let activeQuestionId = null;
+    let availableQuestions = [];
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-sky-500/15', 'text-sky-400', 'border', 'border-sky-500/20');
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('bg-sky-500/15', 'text-sky-400', 'border', 'border-sky-500/20');
+        }
+      });
+      const activeEl = document.getElementById(`tab-${tabId}`);
+      if (activeEl) activeEl.classList.add('active');
+    }
+
+    // Health Check
+    async function checkHealth() {
+      try {
+        const res = await fetch(`${API_BASE}/health`);
+        if (res.ok) {
+          document.getElementById('status-dot').className = 'w-2 h-2 rounded-full bg-emerald-400';
+          document.getElementById('status-text').innerText = 'API Live';
+        }
+      } catch (e) {
+        document.getElementById('status-dot').className = 'w-2 h-2 rounded-full bg-rose-400';
+        document.getElementById('status-text').innerText = 'API Offline';
+      }
+    }
+    checkHealth();
+
+    // Fetch and populate Assessment Questions
+    async function loadQuestions() {
+      try {
+        const res = await fetch(`${API_BASE}/assessment/questions`);
+        if (!res.ok) return;
+        availableQuestions = await res.json();
+        const sel = document.getElementById('challenge-selector');
+        sel.innerHTML = '';
+        availableQuestions.forEach(q => {
+          const opt = document.createElement('option');
+          opt.value = q.id;
+          opt.innerText = `${q.title} (${q.difficulty})`;
+          sel.appendChild(opt);
+        });
+        if (availableQuestions.length > 0) {
+          activeQuestionId = availableQuestions[0].id;
+          displayChallenge(availableQuestions[0]);
+        }
+      } catch (err) {
+        console.error("Failed to load questions", err);
+      }
+    }
+    loadQuestions();
+
+    function onChallengeSelected() {
+      const qid = document.getElementById('challenge-selector').value;
+      const q = availableQuestions.find(item => item.id === qid);
+      if (q) {
+        activeQuestionId = q.id;
+        displayChallenge(q);
+      }
+    }
+
+    function displayChallenge(q) {
+      document.getElementById('challenge-title').innerText = q.title;
+      document.getElementById('challenge-difficulty').innerText = q.difficulty.toUpperCase();
+      document.getElementById('challenge-tags').innerText = (q.tags || []).join(' • ');
+      document.getElementById('challenge-desc').innerText = q.description;
+      if (q.starter_code) {
+        document.getElementById('code-editor').value = q.starter_code;
+      }
+    }
+
+    // Run Code against public tests
+    async function runCode() {
+      const btn = document.getElementById('btn-run-code');
+      btn.innerText = "Executing in isolated sandbox...";
+      const code = document.getElementById('code-editor').value;
+      const lang = document.getElementById('language-selector').value;
+
+      try {
+        const res = await fetch(`${API_BASE}/assessment/run`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ question_id: activeQuestionId, code: code, language: lang })
+        });
+        const data = await res.json();
+        displayExecutionResults(data);
+      } catch (err) {
+        alert("Execution failed: " + err.message);
+      } finally {
+        btn.innerHTML = `<i data-lucide="play" class="w-3.5 h-3.5 text-emerald-400 mr-1.5"></i><span>Run Code (Public Tests)</span><span class="arrow-move font-black text-xs ml-1.5">➔</span>`;
+        lucide.createIcons();
+      }
+    }
+
+    // Submit final assessment
+    async function submitCode() {
+      const btn = document.getElementById('btn-submit-code');
+      btn.innerText = "Evaluating full suite...";
+      const code = document.getElementById('code-editor').value;
+      const lang = document.getElementById('language-selector').value;
+
+      try {
+        const res = await fetch(`${API_BASE}/assessment/submit`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            question_id: activeQuestionId,
+            candidate_name: "Alex Morgan",
+            candidate_email: "alex.morgan@email.com",
+            code: code,
+            language: lang
+          })
+        });
+        const data = await res.json();
+        displayExecutionResults(data);
+        alert(`Assessment Submitted! Score: ${data.score_percentage}% (${data.passed_count}/${data.total_count} test cases passed)`);
+      } catch (err) {
+        alert("Submission failed: " + err.message);
+      } finally {
+        btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-white mr-1.5"></i><span>Submit Final Assessment</span><span class="arrow-move font-black text-xs ml-1.5">➔</span>`;
+        lucide.createIcons();
+      }
+    }
+
+    function displayExecutionResults(data) {
+      document.getElementById('exec-time').innerText = `${data.execution_time_ms} ms`;
+      document.getElementById('exec-memory').innerText = `${data.memory_used_kb} KB`;
+      document.getElementById('exec-passed').innerText = `${data.passed_count}/${data.total_count}`;
+
+      const badge = document.getElementById('exec-status-badge');
+      if (data.status === 'passed') {
+        badge.className = "px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold";
+        badge.innerText = "ALL PASSED (100%)";
+      } else {
+        badge.className = "px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 text-[10px] font-bold";
+        badge.innerText = data.status.toUpperCase();
+      }
+
+      const details = document.getElementById('exec-details');
+      if (data.test_case_results && data.test_case_results.length > 0) {
+        details.innerHTML = data.test_case_results.map(tc => `
+          <div class="flex justify-between items-center p-1.5 rounded bg-slate-900 border border-slate-800">
+            <span>Case ${tc.test_case_id}: Input ${tc.input}</span>
+            <span class="${tc.passed ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}">
+              ${tc.passed ? '✓ PASSED' : '✗ FAILED'} (${tc.duration_ms}ms)
+            </span>
+          </div>
+        `).join('');
+      } else if (data.error) {
+        details.innerHTML = `<div class="text-rose-400 p-2 bg-rose-950/40 rounded border border-rose-800">${data.error}</div>`;
+      }
+    }
+
+    // Copilot: Generate Questions
+    async function generateInterviewQuestions() {
+      const cat = document.getElementById('copilot-category').value;
+      const diff = document.getElementById('copilot-difficulty').value;
+      try {
+        const res = await fetch(`${API_BASE}/interview/generate-questions`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ job_title: "Senior AI & Backend Engineer", category: cat, difficulty: diff, count: 4 })
+        });
+        const questions = await res.json();
+        const container = document.getElementById('copilot-questions-container');
+        container.innerHTML = questions.map((q, idx) => `
+          <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">${q.category} • ${q.difficulty}</span>
+              <span class="text-[10px] text-slate-500 font-mono">Q-${idx + 1}</span>
+            </div>
+            <h4 class="text-sm font-bold text-white">${q.question_text}</h4>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800/80 text-xs text-slate-300">
+              <strong class="text-slate-400 block mb-1">Ideal Answer Guide:</strong>
+              ${q.ideal_answer}
+            </div>
+            <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/60 text-xs">
+              <strong class="text-indigo-400 block mb-1">Suggested Follow-Up Prompts for Interviewer:</strong>
+              <ul class="list-disc list-inside space-y-1 text-slate-400">
+                ${(q.follow_up_questions || []).map(f => `<li>${f}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        alert("Failed to generate questions: " + err.message);
+      }
+    }
+
+    // Copilot: Explain Error
+    async function explainErrorLive() {
+      const err = document.getElementById('error-explainer-input').value;
+      try {
+        const res = await fetch(`${API_BASE}/interview/explain-error`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ code: "", error_message: err, language: "python" })
+        });
+        const data = await res.json();
+        document.getElementById('error-explainer-output').innerHTML = `
+          <div class="font-bold text-amber-400">${data.root_cause_explanation}</div>
+          <p class="text-slate-300 mt-1">${data.interviewer_hint}</p>
+          <div class="text-[11px] text-sky-400 mt-1"><strong>Suggested Probe:</strong> "${data.suggested_follow_up_prompt}"</div>
+        `;
+      } catch (e) {
+        alert("Error explaining error: " + e.message);
+      }
+    }
+
+    // Resume Upload & Extraction
+    let uploadedResumeId = null;
+    let currentCandidateData = null;
+
+    async function uploadResumeFile(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const titleEl = document.getElementById('upload-status-title');
+      const subEl = document.getElementById('upload-status-sub');
+      titleEl.innerHTML = `<span class="animate-pulse text-sky-400">Uploading & Extracting ${file.name}...</span>`;
+      subEl.innerText = "Extracting text, entities, skills via PyMuPDF/python-docx/OCR...";
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const res = await fetch(`${API_BASE}/resumes/upload`, {
+          method: "POST",
+          body: formData
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || "Upload failed");
+        }
+        const data = await res.json();
+        uploadedResumeId = data.id;
+        currentCandidateData = data;
+        renderCandidateExtraction(data, file.name);
+      } catch (err) {
+        alert("Error uploading resume: " + err.message);
+        titleEl.innerText = "Upload failed. Click to try again.";
+        subEl.innerText = err.message;
+      }
+    }
+
+    async function parsePastedResume() {
+      const text = document.getElementById('resume-text-input').value.trim();
+      if (!text || text.length < 20) {
+        alert("Please paste at least 20 characters of resume text to extract.");
+        return;
+      }
+
+      const titleEl = document.getElementById('upload-status-title');
+      const subEl = document.getElementById('upload-status-sub');
+      titleEl.innerHTML = `<span class="animate-pulse text-sky-400">Parsing Resume Text...</span>`;
+      subEl.innerText = "Extracting entities, skills, and experience...";
+
+      try {
+        const res = await fetch(`${API_BASE}/resumes/manual`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ raw_text: text, original_filename: "pasted_resume.txt" })
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || "Parsing failed");
+        }
+        const data = await res.json();
+        uploadedResumeId = data.id;
+        currentCandidateData = data;
+        renderCandidateExtraction(data, "Pasted Resume Text");
+      } catch (err) {
+        alert("Error parsing resume: " + err.message);
+        titleEl.innerText = "Parsing failed. Click to try again.";
+        subEl.innerText = err.message;
+      }
+    }
+
+    function renderCandidateExtraction(data, sourceLabel) {
+      const titleEl = document.getElementById('upload-status-title');
+      const subEl = document.getElementById('upload-status-sub');
+      titleEl.innerText = `✓ ${data.candidate_name || sourceLabel}`;
+      subEl.innerText = `${data.skills_count || (data.skills && data.skills.length) || 0} Skills Extracted • ${data.file_format ? data.file_format.toUpperCase() : "Text"}`;
+
+      const structuredJson = {
+        candidate_name: data.candidate_name || "Extracted Candidate",
+        email: data.email || null,
+        phone: data.phone || null,
+        location: data.location || null,
+        technical_skills: data.technical_skills || (data.skills ? data.skills.filter(s => s.category !== 'soft_skill').map(s => s.skill_name) : []),
+        soft_skills: data.soft_skills || (data.skills ? data.skills.filter(s => s.category === 'soft_skill').map(s => s.skill_name) : []),
+        education: data.education || [],
+        experience: data.experience || [],
+        projects: data.projects || [],
+        certifications: data.certifications || [],
+        missing_information: data.missing_information || []
+      };
+
+      const jsonPre = document.getElementById('resume-json-output');
+      if (jsonPre) {
+        jsonPre.innerText = JSON.stringify(structuredJson, null, 2);
+      }
+
+      const missingEl = document.getElementById('resume-missing-info');
+      if (missingEl) {
+        if (structuredJson.missing_information && structuredJson.missing_information.length > 0) {
+          missingEl.className = "font-bold text-amber-400 block mt-0.5";
+          missingEl.innerText = `Missing: ${structuredJson.missing_information.join(", ")}`;
+        } else {
+          missingEl.className = "font-bold text-emerald-400 block mt-0.5";
+          missingEl.innerText = "None Detected (100% Complete)";
+        }
+      }
+
+      const tipEl = document.getElementById('resume-opt-tip');
+      if (tipEl) {
+        tipEl.innerText = structuredJson.technical_skills.length > 5
+          ? `Strong profile: ${structuredJson.technical_skills.length} technical skills identified across modern frameworks.`
+          : "Consider adding more quantifiable bullet points with specific technical metrics.";
+      }
+
+      const matchTitle = document.getElementById('match-candidate-title');
+      if (matchTitle) {
+        matchTitle.innerText = `${structuredJson.candidate_name} for Target Job`;
+      }
+    }
+
+    async function analyzeJobDescription() {
+      const text = document.getElementById('job-description-input').value.trim();
+      if (!text || text.length < 15) {
+        alert("Please enter a job description with at least 15 characters.");
+        return;
+      }
+
+      const listContainer = document.getElementById('jd-extracted-list');
+      listContainer.innerHTML = `<div class="p-4 text-center text-xs text-sky-400 animate-pulse">Extracting requirements with NLP classifier...</div>`;
+
+      try {
+        const res = await fetch(`${API_BASE}/jobs/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ raw_text: text })
+        });
+        if (!res.ok) throw new Error("Failed to analyze job description");
+        const data = await res.json();
+
+        if (data.requirements && data.requirements.length > 0) {
+          listContainer.innerHTML = data.requirements.map(req => {
+            const isMandatory = (req.classification || '').toLowerCase() === 'mandatory';
+            const badgeColor = isMandatory
+              ? 'bg-rose-500/20 text-rose-400 border-rose-500/30'
+              : 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+            return `
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center text-xs">
+                <div>
+                  <span class="font-bold text-white block">${req.requirement_name}</span>
+                  <span class="text-[11px] text-slate-400">${req.evidence_text || req.category}</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full font-bold border text-[10px] ${badgeColor}">
+                  ${(req.classification || 'Mandatory').toUpperCase()}
+                </span>
+              </div>
+            `;
+          }).join('');
+        } else {
+          listContainer.innerHTML = `<div class="p-4 text-xs text-slate-400">No specific requirements detected.</div>`;
+        }
+      } catch (err) {
+        alert("Error analyzing job description: " + err.message);
+      }
+    }
+
+    async function runDirectMatch() {
+      const jobText = document.getElementById('job-description-input').value.trim();
+      const resumeText = document.getElementById('resume-text-input').value.trim();
+
+      if (!uploadedResumeId && (!resumeText || resumeText.length < 20)) {
+        alert("Please upload a resume or paste resume text first in the Resume Analyzer tab.");
+        switchTab('resume');
+        return;
+      }
+
+      try {
+        const payload = {
+          resume_id: uploadedResumeId || null,
+          resume_text: uploadedResumeId ? null : resumeText,
+          job_text: jobText
+        };
+
+        const res = await fetch(`${API_BASE}/matching/analyze`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error("Match analysis failed");
+        const data = await res.json();
+
+        const scoreVal = Math.round(data.overall_match_score || 0);
+        document.getElementById('match-score-big').innerText = `${scoreVal}%`;
+        document.getElementById('match-candidate-title').innerText = `${data.candidate_name || "Candidate"} for ${data.job_title || "Target Role"}`;
+
+        const avgStat = document.getElementById('stat-avg-match');
+        if (avgStat) avgStat.innerText = `${scoreVal}%`;
+
+        alert(`Match Analysis Complete! Overall Compatibility Score: ${scoreVal}%`);
+      } catch (err) {
+        alert("Match analysis error: " + err.message);
+      }
+    }
+
+    // Load Demo Data
+    function loadDemoScenario() {
+      const demoResume = `ALEX MORGAN
+alex.morgan@email.com • (555) 321-9876 • Seattle, WA • github.com/alexm
+
+Senior Full-Stack & Systems Engineer with 6+ years of experience architecting distributed microservices in Python, TypeScript, and Go.
+
+SKILLS: Python, Go, TypeScript, FastAPI, React, Next.js, Docker, Kubernetes, AWS, PostgreSQL, Redis, PyTorch, Microservices, CI/CD
+
+EXPERIENCE:
+Senior Engineer | CloudScale Systems (2022 - Present)
+• Engineered asynchronous Python (FastAPI) and Go microservices processing 45M daily transactions.
+• Containerized microservices using Docker and orchestrated production workloads on AWS EKS.`;
+
+      document.getElementById('resume-text-input').value = demoResume;
+      parsePastedResume();
+      alert("Demo scenario loaded! You can now explore Resume Analyzer, JD Matching, Assessments, or Interview Copilot.");
+    }
+  </script>
+</body>
+</html>
